@@ -6,5 +6,6 @@ NSClient++ is available at https://nsclient.org/download/
 This script was used against version 0.3.5.
 
 IMPORTANT UPDATE - january 2012: - **this external Xymon perl script was adapted to work with the more powerfull check_nrpe Nagios binary.** 
+
 This new script was used against NSClient++ version 0.3.9.
 To get all test to work you need to paste the external plugins in the folder "C:/program files/NSClient++/scripts" of the target server that you want to monitor.
