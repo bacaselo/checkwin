@@ -1,0 +1,25 @@
+Prerequisites: Install the check_nrpe nagios plugin on your xymon server. (I placed the check_nrpe executable in the folder ~/server/bin/
+1. On the Xymon server: 
+	- copy the checkwin_nrpe.cfg file to the folder ~/server/ext/checkwin/
+	- copy the checkwin_eventlog_nrpe.cfg file to the folder ~/server/ext/checkwin/
+	- copy the checkwin_nrpe.pl script to the folder ~/server/ext/checkwin
+2. On the Client: 
+	- install the NSClient++ agent on the server that you want to monitor. (Click next, next, agree,... finish. config doesn't matter, will be replaced in the next steps) 
+	- copy the external scripts to the ~/NSClient++/scripts/ folder 
+	- replace the NSC.ini file by the attached one and add the xymon server's IP address to the "allowed hosts=" 
+	- Now you can start the NSClient in test mode (NSClient++.exe -test)
+3. On the Xymon server: 
+	- Modify the xymon_nrpe.cfg file 
+	- In the ~/server/etc/tasks.cfg file just add the following lines to activate the script 
+		[checkwin_nrpe] 
+		ENVFILE $XYMONHOME/ext/checkwin/checkwin_nrpe.cfg
+		CMD $XYMONHOME/ext/checkwin/checkwin_nrpe.pl
+		LOGFILE $XYMONSERVERLOGS/checkwin_nrpe.log
+		INTERVAL 5m
+		[checkwin_eventlog_nrpe] 
+		ENVFILE $XYMONHOME/ext/checkwin/checkwin_nrpe.cfg
+		CMD $XYMONHOME/ext/checkwin/checkwin_eventlog_nrpe.pl
+		LOGFILE $XYMONSERVERLOGS/checkwin_nrpe.log
+		INTERVAL 15m
+4. Stop te NSClient++ test using the command "exit" and start the NSClient++ service on the Client
+5. restart the xymond service (xymon.sh)
